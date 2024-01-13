@@ -11,11 +11,11 @@ namespace DesafioFundamentos.Models
         public string Modelo { get; set; }
         public string Cor { get; set; }
         
-    public Veiculo(string placa, string modelo, string cor)
-    {
-        Placa = placa;
-        Modelo = modelo;
-        Cor = cor;
-    }
+        public Veiculo(string placa, string modelo, string cor)
+        {
+            Placa = placa;
+            Modelo = modelo;
+            Cor = cor;
+        }
     }
 }

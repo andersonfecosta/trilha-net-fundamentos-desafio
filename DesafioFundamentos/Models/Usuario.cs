@@ -10,14 +10,40 @@ namespace DesafioFundamentos.Models
         public string Nome { get; set; }
         public string Telefone { get; set; }
         public string CPF { get; set; }
-        public List<Veiculo> Veiculos { get; set; } 
+        public List<Veiculo> VeiculosEstacionados { get; set; } 
         
         public Usuario(string nome, string telefone, string cpf)
         {
             Nome = nome;
             Telefone = telefone;
             CPF = cpf;
-            Veiculos = new List<Veiculo>();
+            VeiculosEstacionados = new List<Veiculo>();
         }
+
+        public void AdicionarVeiculo(string placaVeiculo)
+        {
+            if (!VeiculosEstacionados.Any(v => v.Placa == placaVeiculo))
+            {
+                Veiculo veiculo = new Veiculo(placaVeiculo, "", ""); 
+                VeiculosEstacionados.Add(veiculo);
+            }
+            else
+            {
+                Console.WriteLine("Usuário já possui esse veículo estacionado.");
+            }
+        }
+
+        public void RemoverVeiculo(string placaVeiculo)
+        {
+            Veiculo veiculoRemover = VeiculosEstacionados.FirstOrDefault(v => v.Placa == placaVeiculo);
+            if (veiculoRemover != null)
+            {
+                VeiculosEstacionados.Remove(veiculoRemover);
+            }
+            else
+            {
+                Console.WriteLine("Veículo não encontrado para remoção.");
+            }
+        }        
     }
 }

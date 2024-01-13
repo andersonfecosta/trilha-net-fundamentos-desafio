@@ -4,7 +4,7 @@ namespace DesafioFundamentos.Models
     {
         private decimal precoInicial = 0;
         private decimal precoPorHora = 0;
-        private List<string> veiculos = new List<string>();
+        private List<Usuario> usuarios = new List<Usuario>();
 
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
         {
@@ -12,70 +12,51 @@ namespace DesafioFundamentos.Models
             this.precoPorHora = precoPorHora;
         }
 
-        public void AdicionarVeiculo()
-        {            
-            Console.WriteLine("Digite a placa do veículo para estacionar:");
-            string placa = Console.ReadLine();
-
-            if (!VeiculoEstacionado(placa))
-            {
-                veiculos.Add(placa);
-                Console.WriteLine($"O veículo {placa} foi estacionado com sucesso.");
-            }
-            else
-            {
-                Console.WriteLine($"O veículo {placa} já está estacionado. Confira se digitou a placa corretamente");
-            }
-        }
-
-        public void RemoverVeiculo()
-        {                           
-            Console.WriteLine("Digite a placa do veículo para remover:");       
-            string placa = Console.ReadLine();
-
-            if (VeiculoEstacionado(placa))
-            {  
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
-                if (int.TryParse(Console.ReadLine(), out int horas) && horas >= 0)
-                {
-                    decimal valorTotal = CalcularValorTotal(horas);
-                    veiculos.Remove(placa);
-                    Console.WriteLine($"O veículo {placa} foi removido e o preço total foi de: R$ {valorTotal}");
-                }
-                else
-                {
-                    Console.WriteLine("Quantidade de horas inválida.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente");
-            }
-        }
-
-        public void ListarVeiculos()
+        public void EntrarNoEstacionamento(Usuario usuario, string placaVeiculo)
         {
-            if (veiculos.Any())
+            if (!usuarios.Contains(usuario))
             {
-                Console.WriteLine("Os veículos estacionados são:");
-                foreach (String placa in veiculos)
-                {
-                    Console.WriteLine(placa);
+                usuarios.Add(usuario);
+            }
 
-                }
+            usuario.AdicionarVeiculo(placaVeiculo);
+        }
+
+
+        public void SairDoEstacionamento(Usuario usuario, string placaVeiculo, int horasEstacionado)
+        {
+            Veiculo veiculo = usuario.VeiculosEstacionados.FirstOrDefault(v => v.Placa == placaVeiculo);
+
+            if (veiculo != null)
+            {
+                decimal valorVeiculo = CalcularValorVeiculo(horasEstacionado);
+
+                usuario.RemoverVeiculo(placaVeiculo);
+
+                Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Valor a ser pago: R$ {valorVeiculo}");
             }
             else
             {
-                Console.WriteLine("Não há veículos estacionados.");
+                Console.WriteLine($"Veículo com placa {placaVeiculo} não encontrado para o usuário {usuario.Nome}");
             }
         }
 
-        private bool VeiculoEstacionado(string placa)
+        public void ListarVeiculosEstacionados()
         {
-            return veiculos.Any(x => x.ToUpper() == placa.ToUpper());
+            Console.WriteLine("Veículos estacionados:");
+            
+            foreach (Usuario usuario in usuarios)
+            {
+                Console.WriteLine($"Nome: {usuario.Nome}");
+                
+                foreach (Veiculo veiculo in usuario.VeiculosEstacionados)
+                {
+                    Console.WriteLine($"  Placa: {veiculo.Placa}, Modelo: {veiculo.Modelo}, Cor: {veiculo.Cor}");
+                }
+            }
         }
 
-        private decimal CalcularValorTotal(int horas)
+        private decimal CalcularValorVeiculo(int horas)
         {
             return precoInicial + (precoPorHora * horas);
         }
