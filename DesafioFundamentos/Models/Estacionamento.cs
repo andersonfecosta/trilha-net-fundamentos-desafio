@@ -30,9 +30,8 @@ namespace DesafioFundamentos.Models
             if (veiculo != null)
             {
                 decimal valorVeiculo = CalcularValorVeiculo(horasEstacionado);
-
+                usuario.RegistrarUtilizacao(veiculo, horasEstacionado, valorVeiculo);
                 usuario.RemoverVeiculo(placaVeiculo);
-
                 Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Valor a ser pago: R$ {valorVeiculo}");
             }
             else

@@ -11,6 +11,7 @@ namespace DesafioFundamentos.Models
         public string Telefone { get; set; }
         public string CPF { get; set; }
         public List<Veiculo> VeiculosEstacionados { get; set; } 
+        private List<RegistroUtilizacao> registros = new List<RegistroUtilizacao>();
         
         public Usuario(string nome, string telefone, string cpf)
         {
@@ -18,6 +19,7 @@ namespace DesafioFundamentos.Models
             Telefone = telefone;
             CPF = cpf;
             VeiculosEstacionados = new List<Veiculo>();
+            registros = new List<RegistroUtilizacao>();
         }
 
         public void AdicionarVeiculo(string placaVeiculo)
@@ -44,6 +46,11 @@ namespace DesafioFundamentos.Models
             {
                 Console.WriteLine("Veículo não encontrado para remoção.");
             }
-        }        
+        }  
+        public void RegistrarUtilizacao(Veiculo veiculo, int horas, decimal valor)
+        {
+            RegistroUtilizacao registro = new RegistroUtilizacao(veiculo, horas, valor);
+            registros.Add(registro);            
+        }      
     }
 }
