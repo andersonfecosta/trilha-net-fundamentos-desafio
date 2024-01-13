@@ -2,8 +2,11 @@ namespace DesafioFundamentos.Models
 {
     public class Estacionamento
     {
-        private decimal precoInicial = 0;
-        private decimal precoPorHora = 0;
+        private decimal precoInicial = 20;
+        private decimal precoPorHora = 10;
+        private decimal precoAssinaturaMensal = 50;
+        private int limiteHorasSemCobranca = 12;
+        private int limiteHorasCobrancaMeia = 20;
         private List<Usuario> usuarios = new List<Usuario>();
 
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
@@ -28,11 +31,18 @@ namespace DesafioFundamentos.Models
             Veiculo veiculo = usuario.VeiculosEstacionados.FirstOrDefault(v => v.Placa == placaVeiculo);
 
             if (veiculo != null)
-            {
-                decimal valorVeiculo = CalcularValorVeiculo(horasEstacionado);
+            {                
+                decimal valorVeiculo = CalcularValorVeiculo(usuario, horasEstacionado);
                 usuario.RegistrarUtilizacao(veiculo, horasEstacionado, valorVeiculo);
                 usuario.RemoverVeiculo(placaVeiculo);
-                Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Valor a ser pago: R$ {valorVeiculo}");
+                if (valorVeiculo > 0)
+                {
+                    Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Valor a ser pago: R$ {valorVeiculo}");
+                }
+                else
+                {
+                    Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Sem cobrança");
+                }
             }
             else
             {
@@ -55,9 +65,38 @@ namespace DesafioFundamentos.Models
             }
         }
 
-        private decimal CalcularValorVeiculo(int horas)
+        private decimal CalcularValorVeiculo(Usuario usuario, int horasEstacionado)
         {
-            return precoInicial + (precoPorHora * horas);
+            bool assinante = usuario.AssinaturaMensal;
+
+            if (assinante)
+            {
+                int horasTotais = horasEstacionado;
+
+                foreach (var registro in usuario.registros)
+                {
+                    
+                    horasTotais += registro.Horas;
+                    
+                }
+
+                if (horasTotais <= limiteHorasSemCobranca)
+                {
+                    return 0;
+                }
+                else if (horasTotais <= limiteHorasCobrancaMeia)
+                {
+                    return precoPorHora * horasEstacionado / 2;
+                }
+                else
+                {
+                    return precoPorHora * horasEstacionado; 
+                }
+            }
+            else
+            {
+                return precoInicial + precoPorHora * (horasEstacionado - 1); 
+            }
         }
 
         public void CadastrarUsuario()

@@ -11,7 +11,8 @@ namespace DesafioFundamentos.Models
         public string Telefone { get; set; }
         public string CPF { get; set; }
         public List<Veiculo> VeiculosEstacionados { get; set; } 
-        private List<RegistroUtilizacao> registros = new List<RegistroUtilizacao>();
+        public List<RegistroUtilizacao> registros = new List<RegistroUtilizacao>();
+        public bool AssinaturaMensal { get; set; }
         
         public Usuario(string nome, string telefone, string cpf)
         {
