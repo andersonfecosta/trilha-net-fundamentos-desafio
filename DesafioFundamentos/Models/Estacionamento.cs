@@ -60,5 +60,29 @@ namespace DesafioFundamentos.Models
         {
             return precoInicial + (precoPorHora * horas);
         }
+
+        public void CadastrarUsuario()
+        {
+            Console.WriteLine("Cadastro de Usuário:");
+            Console.WriteLine("Informe seu nome:");
+            string nome = Console.ReadLine();
+
+            Console.WriteLine("Informe seu telefone:");
+            string telefone = Console.ReadLine();
+
+            Console.WriteLine("Informe seu CPF:");
+            string cpf = Console.ReadLine();
+
+            if (usuarios.Any(u => u.CPF == cpf))
+            {
+                Console.WriteLine("Usuário já cadastrado.");
+            }
+            else
+            {
+                Usuario novoUsuario = new Usuario(nome, telefone, cpf);
+                usuarios.Add(novoUsuario);
+                Console.WriteLine($"Usuário {nome} cadastrado com sucesso!");
+            }
+        }
     }
 }
