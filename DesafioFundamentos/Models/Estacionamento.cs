@@ -7,6 +7,36 @@ namespace DesafioFundamentos.Models
         private decimal precoAssinaturaMensal = 50;
         private int limiteHorasSemCobranca = 12;
         private int limiteHorasCobrancaMeia = 20;
+        public decimal PrecoInicial
+        {
+            get { return precoInicial; }
+            set { precoInicial = value; }
+        }
+
+        public decimal PrecoPorHora
+        {
+            get { return precoPorHora; }
+            set { precoPorHora = value; }
+        }
+
+        public decimal PrecoAssinaturaMensal
+        {
+            get { return precoAssinaturaMensal; }
+            set { precoAssinaturaMensal = value; }
+        }
+
+        public int LimiteHorasSemCobranca
+        {
+            get { return limiteHorasSemCobranca; }
+            set { limiteHorasSemCobranca = value; }
+        }
+
+        public int LimiteHorasCobrancaMeia
+        {
+            get { return limiteHorasCobrancaMeia; }
+            set { limiteHorasCobrancaMeia = value; }
+        }
+
         private List<Usuario> usuarios = new List<Usuario>();
 
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
