@@ -5,8 +5,8 @@ namespace DesafioFundamentos.Models
         private decimal precoInicial = 20;
         private decimal precoPorHora = 10;
         private decimal precoAssinaturaMensal = 50;
-        private int limiteHorasSemCobranca = 12;
-        private int limiteHorasCobrancaMeia = 20;
+        private decimal limiteHorasSemCobranca = 12;
+        private decimal limiteHorasCobrancaMeia = 20;
         public decimal PrecoInicial
         {
             get { return precoInicial; }
@@ -25,13 +25,13 @@ namespace DesafioFundamentos.Models
             set { precoAssinaturaMensal = value; }
         }
 
-        public int LimiteHorasSemCobranca
+        public decimal LimiteHorasSemCobranca
         {
             get { return limiteHorasSemCobranca; }
             set { limiteHorasSemCobranca = value; }
         }
 
-        public int LimiteHorasCobrancaMeia
+        public decimal LimiteHorasCobrancaMeia
         {
             get { return limiteHorasCobrancaMeia; }
             set { limiteHorasCobrancaMeia = value; }
@@ -39,44 +39,124 @@ namespace DesafioFundamentos.Models
 
         private List<Usuario> usuarios = new List<Usuario>();
 
-        public Estacionamento(decimal precoInicial, decimal precoPorHora)
+        public Estacionamento()
         {
-            this.precoInicial = precoInicial;
-            this.precoPorHora = precoPorHora;
+
         }
 
-        public void EntrarNoEstacionamento(Usuario usuario, string placaVeiculo)
+        public void EntrarNoEstacionamento()
         {
-            if (!usuarios.Contains(usuario))
+            Console.Clear();
+            Console.WriteLine("Entrar no Estacionamento");
+
+            Console.Write("Digite seu CPF: ");
+            string cpf = Console.ReadLine();
+
+            Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
+
+            if (usuario == null)
             {
-                usuarios.Add(usuario);
+                Console.WriteLine("Usuário não cadastrado. Cadastre-se primeiro.");
             }
+            else
+            {
+                Console.Write("Digite a placa do veículo: ");
+                string placaVeiculo = Console.ReadLine();
+                Console.Write("Digite o modelo do veículo: ");
+                string modeloVeiculo = Console.ReadLine();
+                Console.Write("Digite a cor do veículo: ");
+                string corVeiculo = Console.ReadLine();
+                usuario.AdicionarVeiculo(placaVeiculo, modeloVeiculo, corVeiculo);
+                Console.WriteLine("Entrada realizada com sucesso. Pressione qualquer tecla para continuar.");
+                Console.ReadKey();
+            }
+        }   
 
-            usuario.AdicionarVeiculo(placaVeiculo);
-        }
 
-
-        public void SairDoEstacionamento(Usuario usuario, string placaVeiculo, int horasEstacionado)
+        public void SairDoEstacionamento()
         {
-            Veiculo veiculo = usuario.VeiculosEstacionados.FirstOrDefault(v => v.Placa == placaVeiculo);
+            Console.Clear();
+            Console.WriteLine("Sair do Estacionamento");
 
-            if (veiculo != null)
-            {                
-                decimal valorVeiculo = CalcularValorVeiculo(usuario, horasEstacionado);
-                usuario.RegistrarUtilizacao(veiculo, horasEstacionado, valorVeiculo);
-                usuario.RemoverVeiculo(placaVeiculo);
-                if (valorVeiculo > 0)
+            Console.Write("Digite seu CPF: ");
+            string cpf = Console.ReadLine();
+
+            Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
+
+            if (usuario != null)
+            {
+                Console.Write("Digite a placa do veículo: ");
+                string placaVeiculo = Console.ReadLine();
+
+                Veiculo veiculo = usuario.VeiculosEstacionados.FirstOrDefault(v => v.Placa == placaVeiculo);
+
+                if (veiculo != null)
                 {
-                    Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Valor a ser pago: R$ {valorVeiculo}");
+                    Console.Write("Digite a quantidade de horas estacionado: ");
+                    if (int.TryParse(Console.ReadLine(), out int horasEstacionado) && horasEstacionado >= 0)
+                    {
+                        decimal valorVeiculo = CalcularValorVeiculo(usuario, horasEstacionado);
+                        usuario.RegistrarUtilizacao(veiculo, horasEstacionado, valorVeiculo);
+                        usuario.RemoverVeiculo(placaVeiculo);
+
+                        if (valorVeiculo > 0)
+                        {
+                            Console.WriteLine($"Retirada do veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) para o usuário {usuario.Nome}");
+                            Console.WriteLine($"Valor a ser pago: R$ {valorVeiculo}");
+                            Console.WriteLine("Pressione qualquer tecla para continuar.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Retirada do veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) para o usuário {usuario.Nome}");
+                            Console.WriteLine("Sem cobrança. Pressione qualquer tecla para continuar.");
+                        }
+
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Quantidade de horas inválida. Pressione qualquer tecla para continuar.");
+                        Console.ReadKey();
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"{usuario.Nome} retirou o veículo {veiculo.Modelo} (Placa: {placaVeiculo}, Cor: {veiculo.Cor}) - Sem cobrança");
+                    Console.WriteLine($"Veículo com placa {placaVeiculo} não encontrado para o usuário {usuario.Nome}. Pressione qualquer tecla para continuar.");
+                    Console.ReadKey();
                 }
             }
             else
             {
-                Console.WriteLine($"Veículo com placa {placaVeiculo} não encontrado para o usuário {usuario.Nome}");
+                Console.WriteLine($"Usuário com CPF {cpf} não encontrado. Pressione qualquer tecla para continuar.");
+                Console.ReadKey();
+            }
+        }
+        public void ListarVeiculosUsuario()
+        {
+            Console.Clear();
+            Console.WriteLine("Lista de veículos");
+
+            Console.Write("Digite seu CPF: ");
+            string cpf = Console.ReadLine();
+            Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
+
+            if (usuario != null)
+            {
+                Console.WriteLine($"Veículos estacionados para {usuario.Nome}:");
+
+                foreach (Veiculo veiculo in usuario.VeiculosEstacionados)
+                {
+                    Console.WriteLine($"  Placa: {veiculo.Placa}, Modelo: {veiculo.Modelo}, Cor: {veiculo.Cor}");
+                }
+
+                Console.WriteLine("Pressione qualquer tecla para continuar.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine($"Usuário com CPF {cpf} não encontrado.");
+                Console.WriteLine("Pressione qualquer tecla para continuar.");
+                Console.ReadKey();
             }
         }
 
@@ -93,6 +173,22 @@ namespace DesafioFundamentos.Models
                     Console.WriteLine($"  Placa: {veiculo.Placa}, Modelo: {veiculo.Modelo}, Cor: {veiculo.Cor}");
                 }
             }
+
+            Console.WriteLine("Pressione qualquer tecla para continuar.");
+            Console.ReadKey();
+        }
+
+        public void ListarUsuarios()
+        {
+            Console.WriteLine("Usuários Cadastrados:");
+            
+            foreach (Usuario usuario in usuarios)
+            {
+                Console.WriteLine($"Nome: {usuario.Nome}");                               
+            }
+
+            Console.WriteLine("Pressione qualquer tecla para continuar.");
+            Console.ReadKey();
         }
 
         private decimal CalcularValorVeiculo(Usuario usuario, int horasEstacionado)
@@ -131,6 +227,7 @@ namespace DesafioFundamentos.Models
 
         public void CadastrarUsuario()
         {
+            Console.Clear();
             Console.WriteLine("Cadastro de Usuário:");
             Console.WriteLine("Informe seu nome:");
             string nome = Console.ReadLine();

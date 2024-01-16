@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DesafioFundamentos.Models;
 using DesafioFundamentos.Utils;
 
@@ -12,9 +8,9 @@ namespace DesafioFundamentos.UI
         private Estacionamento estacionamento;
         private Autenticacao autenticacao;
 
-        public Menu()
+        public Menu(Estacionamento estacionamento)
         {
-            estacionamento = new Estacionamento(20, 10);
+            this.estacionamento = estacionamento;
             autenticacao = new Autenticacao();
         }
 
@@ -42,10 +38,13 @@ namespace DesafioFundamentos.UI
                         CadastrarUsuario();
                         break;
                     case "2":
+                        estacionamento.EntrarNoEstacionamento();
                         break;
                     case "3":
+                        estacionamento.SairDoEstacionamento();
                         break;
                     case "4":
+                        estacionamento.ListarVeiculosUsuario();
                         break;
                     case "5":
                         EntrarComoAdministrador();
@@ -106,8 +105,10 @@ namespace DesafioFundamentos.UI
                 switch (opcao)
                 {
                     case "1":
+                        estacionamento.ListarUsuarios();
                         break;
                     case "2":
+                        estacionamento.ListarVeiculosEstacionados();
                         break;
                     case "3":
                         ModificarValoresEstacionamento();
@@ -121,7 +122,8 @@ namespace DesafioFundamentos.UI
                         break;
                 }
             } while (!sair);
-        }
+        }        
+
         private void ModificarValoresEstacionamento()
         {
             Console.Clear();
@@ -139,19 +141,54 @@ namespace DesafioFundamentos.UI
             switch (opcao)
             {
                 case "1":
-                    ModificarValor(estacionamento.PrecoInicial, "Preço Inicial");
+                    Console.WriteLine($"Valor atual: {estacionamento.PrecoInicial}");
+                    Console.Write("Informe o novo valor para Preço Inicial: ");
+                    if (ValidarNovoValor(Console.ReadLine(), out decimal novoPrecoInicial))
+                    {
+                        estacionamento.PrecoInicial = novoPrecoInicial;
+                        Console.WriteLine("Preço Inicial modificado com sucesso. Pressione qualquer tecla para continuar.");
+                        Console.ReadKey();
+                    }
                     break;
                 case "2":
-                    ModificarValor(estacionamento.PrecoPorHora, "Preço por Hora");
+                    Console.WriteLine($"Valor atual: {estacionamento.PrecoPorHora}");
+                    Console.Write("Informe o novo valor para Preço por Hora: ");
+                    if (ValidarNovoValor(Console.ReadLine(), out decimal novoPrecoPorHora))
+                    {
+                        estacionamento.PrecoPorHora = novoPrecoPorHora;
+                        Console.WriteLine("Preço por Hora modificado com sucesso. Pressione qualquer tecla para continuar.");
+                        Console.ReadKey();
+                    }
                     break;
                 case "3":
-                    ModificarValor(estacionamento.PrecoAssinaturaMensal, "Preço Assinatura Mensal");
+                    Console.WriteLine($"Valor atual: {estacionamento.PrecoAssinaturaMensal}");
+                    Console.Write("Informe o novo valor para Preço Assinatura Mensal: ");
+                    if (ValidarNovoValor(Console.ReadLine(), out decimal novoPrecoAssinaturaMensal))
+                    {
+                        estacionamento.PrecoAssinaturaMensal = novoPrecoAssinaturaMensal;
+                        Console.WriteLine("Preço Assinatura Mensal modificado com sucesso. Pressione qualquer tecla para continuar.");
+                        Console.ReadKey();
+                    }
                     break;
                 case "4":
-                    ModificarValor(estacionamento.LimiteHorasSemCobranca, "Limite de Horas Sem Cobrança");
+                    Console.WriteLine($"Valor atual: {estacionamento.LimiteHorasSemCobranca}");
+                    Console.Write("Informe o novo valor para Limite de Horas Sem Cobrança: ");
+                    if (ValidarNovoValor(Console.ReadLine(), out decimal novoLimiteHorasSemCobranca))
+                    {
+                        estacionamento.LimiteHorasSemCobranca = (int)novoLimiteHorasSemCobranca;
+                        Console.WriteLine("Limite de Horas Sem Cobrança modificado com sucesso. Pressione qualquer tecla para continuar.");
+                        Console.ReadKey();
+                    }
                     break;
                 case "5":
-                    ModificarValor(estacionamento.LimiteHorasCobrancaMeia, "Limite de Horas Cobrança Meia");
+                    Console.WriteLine($"Valor atual: {estacionamento.LimiteHorasCobrancaMeia}");
+                    Console.Write("Informe o novo valor para Limite de Horas Cobrança Meia: ");
+                    if (ValidarNovoValor(Console.ReadLine(), out decimal novoLimiteHorasCobrancaMeia))
+                    {
+                        estacionamento.LimiteHorasCobrancaMeia = (int)novoLimiteHorasCobrancaMeia;
+                        Console.WriteLine("Limite de Horas Cobrança Meia modificado com sucesso. Pressione qualquer tecla para continuar.");
+                        Console.ReadKey();
+                    }
                     break;
                 case "6":
                     break;
@@ -161,22 +198,19 @@ namespace DesafioFundamentos.UI
                     break;
             }
         }
-        private void ModificarValor(decimal valor, string nomeValor)
-        {
-            Console.Write($"Informe o novo valor para {nomeValor}: ");
-            string novoValorStr = Console.ReadLine();
 
-            if (decimal.TryParse(novoValorStr, out decimal novoValor))
+        private bool ValidarNovoValor(string novoValorStr, out decimal novoValor)
+        {
+            if (decimal.TryParse(novoValorStr, out novoValor) && novoValor >= 0)
             {
-                valor = novoValor;
-                Console.WriteLine($"{nomeValor} modificado com sucesso. Pressione qualquer tecla para continuar.");
-                Console.ReadKey();
+                return true;
             }
             else
             {
                 Console.WriteLine("Valor inválido. Pressione qualquer tecla para continuar.");
                 Console.ReadKey();
+                return false;
             }
-    }
+        }
     }
 }

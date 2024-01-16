@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace DesafioFundamentos.Models
 {
     public class Usuario
@@ -23,11 +18,11 @@ namespace DesafioFundamentos.Models
             registros = new List<RegistroUtilizacao>();
         }
 
-        public void AdicionarVeiculo(string placaVeiculo)
+        public void AdicionarVeiculo(string placaVeiculo, string modeloVeiculo, string corVeiculo)
         {
             if (!VeiculosEstacionados.Any(v => v.Placa == placaVeiculo))
             {
-                Veiculo veiculo = new Veiculo(placaVeiculo, "", ""); 
+                Veiculo veiculo = new Veiculo(placaVeiculo, modeloVeiculo, corVeiculo); 
                 VeiculosEstacionados.Add(veiculo);
             }
             else

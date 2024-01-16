@@ -1,6 +1,5 @@
 ﻿using DesafioFundamentos.Models;
 using DesafioFundamentos.UI;
-using DesafioFundamentos.Utils;
 
 class Program
 {
@@ -8,6 +7,9 @@ class Program
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+        Estacionamento estacionamento = new Estacionamento();
         
+        Menu menu = new Menu(estacionamento);
+        menu.ExibirMenu();
     }
 }
