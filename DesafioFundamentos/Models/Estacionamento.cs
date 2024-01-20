@@ -47,9 +47,8 @@ namespace DesafioFundamentos.Models
         public void EntrarNoEstacionamento()
         {
             Console.Clear();
-            Console.WriteLine("Entrar no Estacionamento");
-
-            Console.Write("Digite seu CPF: ");
+            Console.WriteLine("Entrar no Estacionamento\n" +
+                        "Digite seu CPF: ");
             string cpf = Console.ReadLine();
 
             Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
@@ -62,13 +61,20 @@ namespace DesafioFundamentos.Models
             {
                 Console.Write("Digite a placa do veículo: ");
                 string placaVeiculo = Console.ReadLine();
-                Console.Write("Digite o modelo do veículo: ");
-                string modeloVeiculo = Console.ReadLine();
-                Console.Write("Digite a cor do veículo: ");
-                string corVeiculo = Console.ReadLine();
-                usuario.AdicionarVeiculo(placaVeiculo, modeloVeiculo, corVeiculo);
-                Console.WriteLine("Entrada realizada com sucesso. Pressione qualquer tecla para continuar.");
-                Console.ReadKey();
+                if (ValidarPlacaVeiculo(placaVeiculo))
+                {
+                    Console.Write("Digite o modelo do veículo: ");
+                    string modeloVeiculo = Console.ReadLine();
+                    Console.Write("Digite a cor do veículo: ");
+                    string corVeiculo = Console.ReadLine();
+                    usuario.AdicionarVeiculo(placaVeiculo, modeloVeiculo, corVeiculo);
+                    Console.WriteLine("Entrada realizada com sucesso. Pressione qualquer tecla para continuar.");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Placa do veículo inválida. Entrada não realizada.");
+                }
             }
         }   
 
@@ -200,10 +206,8 @@ namespace DesafioFundamentos.Models
                 int horasTotais = horasEstacionado;
 
                 foreach (var registro in usuario.registros)
-                {
-                    
-                    horasTotais += registro.Horas;
-                    
+                {                    
+                    horasTotais += registro.Horas;                   
                 }
 
                 if (horasTotais <= limiteHorasSemCobranca)
@@ -228,8 +232,8 @@ namespace DesafioFundamentos.Models
         public void CadastrarUsuario()
         {
             Console.Clear();
-            Console.WriteLine("Cadastro de Usuário:");
-            Console.WriteLine("Informe seu nome:");
+            Console.WriteLine("Cadastro de Usuário:/n" +
+                        "Informe seu nome:");
             string nome = Console.ReadLine();
 
             Console.WriteLine("Informe seu telefone:");
@@ -238,16 +242,27 @@ namespace DesafioFundamentos.Models
             Console.WriteLine("Informe seu CPF:");
             string cpf = Console.ReadLine();
 
-            if (usuarios.Any(u => u.CPF == cpf))
+            if (ValidarCpf(cpf))
             {
-                Console.WriteLine("Usuário já cadastrado.");
+                if (usuarios.Any(u => u.CPF == cpf))
+                {
+                    Console.WriteLine("Usuário já cadastrado.");
+                }
+                else
+                {
+                    Usuario novoUsuario = new Usuario(nome, telefone, cpf);
+                    usuarios.Add(novoUsuario);
+                    Console.WriteLine($"Usuário {nome} cadastrado com sucesso!");
+                }
             }
             else
             {
-                Usuario novoUsuario = new Usuario(nome, telefone, cpf);
-                usuarios.Add(novoUsuario);
-                Console.WriteLine($"Usuário {nome} cadastrado com sucesso!");
+                Console.WriteLine("CPF inválido. Cadastro não realizado.");
             }
         }
+
+        public Boolean ValidarCpf(string cpf) => cpf.Length == 11 && long.TryParse(cpf, out _);
+
+        public bool ValidarPlacaVeiculo(string placa) => placa.Length == 7;
     }
 }

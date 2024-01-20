@@ -21,15 +21,14 @@ namespace DesafioFundamentos.UI
             do
             {
                 Console.Clear();
-                Console.WriteLine("Bem-vindo ao Estacionamento");
-                Console.WriteLine("1 - Cadastrar Usuário");
-                Console.WriteLine("2 - Entrar no Estacionamento");
-                Console.WriteLine("3 - Sair do Estacionamento");
-                Console.WriteLine("4 - Listar Veículos Estacionados");
-                Console.WriteLine("5 - Entrar como Administrador");
-                Console.WriteLine("6 - Sair");
-
-                Console.Write("Escolha uma opção: ");
+                Console.WriteLine("Bem-vindo ao Estacionamento\n" +
+                          "1 - Cadastrar Usuário\n" +
+                          "2 - Entrar no Estacionamento\n" +
+                          "3 - Sair do Estacionamento\n" +
+                          "4 - Listar Veículos Estacionados\n" +
+                          "5 - Entrar como Administrador\n" +
+                          "6 - Sair\n" +
+                          "Escolha uma opção: ");                                
                 string opcao = Console.ReadLine();
 
                 switch (opcao)
@@ -93,13 +92,12 @@ namespace DesafioFundamentos.UI
             do
             {
                 Console.Clear();
-                Console.WriteLine("Bem-vindo, Administrador");
-                Console.WriteLine("1 - Visualizar Lista de Usuários");
-                Console.WriteLine("2 - Visualizar Lista de Veículos Estacionados");
-                Console.WriteLine("3 - Modificar Valores do Estacionamento");
-                Console.WriteLine("4 - Voltar ao Menu Principal");
-
-                Console.Write("Escolha uma opção: ");
+                Console.WriteLine("Bem-vindo, Administrador\n" +
+                            "1 - Visualizar Lista de Usuários\n" +
+                            "2 - Visualizar Lista de Veículos Estacionados\n" +
+                            "3 - Modificar Valores do Estacionamento\n" +
+                            "4 - Voltar ao Menu Principal\n" +
+                            "Escolha uma opção: ");
                 string opcao = Console.ReadLine();
 
                 switch (opcao)
@@ -127,15 +125,14 @@ namespace DesafioFundamentos.UI
         private void ModificarValoresEstacionamento()
         {
             Console.Clear();
-            Console.WriteLine("Modificar Valores do Estacionamento");
-            Console.WriteLine("1 - Modificar Preço Inicial");
-            Console.WriteLine("2 - Modificar Preço por Hora");
-            Console.WriteLine("3 - Modificar Preço Assinatura Mensal");
-            Console.WriteLine("4 - Modificar Limite de Horas Sem Cobrança");
-            Console.WriteLine("5 - Modificar Limite de Horas Cobrança Meia");
-            Console.WriteLine("6 - Voltar ao Menu Administrador");
-
-            Console.Write("Escolha uma opção: ");
+            Console.WriteLine("Modificar Valores do Estacionamento\n" +
+                        "1 - Modificar Preço Inicial\n" +
+                        "2 - Modificar Preço por Hora\n" +
+                        "3 - Modificar Preço Assinatura Mensal\n" +
+                        "4 - Modificar Limite de Horas Sem Cobrança\n" +
+                        "5 - Modificar Limite de Horas Cobrança Meia\n" +
+                        "6 - Voltar ao Menu Administrador\n" +
+                        "Escolha uma opção: ");
             string opcao = Console.ReadLine();
 
             switch (opcao)
