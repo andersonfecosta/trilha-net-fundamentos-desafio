@@ -21,14 +21,17 @@ namespace DesafioFundamentos.UI
             do
             {
                 Console.Clear();
-                Console.WriteLine("Bem-vindo ao Estacionamento\n" +
-                          "1 - Cadastrar Usuário\n" +
-                          "2 - Entrar no Estacionamento\n" +
-                          "3 - Sair do Estacionamento\n" +
-                          "4 - Listar Veículos Estacionados\n" +
-                          "5 - Entrar como Administrador\n" +
-                          "6 - Sair\n" +
-                          "Escolha uma opção: ");                                
+                Console.WriteLine("===============================================\n" +
+                                  "BEM-VINDO AO ESTACIONAMENTO\n" +
+                                  "===============================================\n" +
+                                  "[1] - Cadastrar Usuário\n" +
+                                  "[2] - Entrar no Estacionamento\n" +
+                                  "[3] - Sair do Estacionamento\n" +
+                                  "[4] - Listar Veículos Estacionados\n" +
+                                  "[5] - Entrar como Administrador\n" +
+                                  "[6] - Sair\n" +
+                                  "===============================================\n" +
+                                  "Escolha uma opção: ");                                
                 string opcao = Console.ReadLine();
 
                 switch (opcao)
@@ -92,12 +95,15 @@ namespace DesafioFundamentos.UI
             do
             {
                 Console.Clear();
-                Console.WriteLine("Bem-vindo, Administrador\n" +
-                            "1 - Visualizar Lista de Usuários\n" +
-                            "2 - Visualizar Lista de Veículos Estacionados\n" +
-                            "3 - Modificar Valores do Estacionamento\n" +
-                            "4 - Voltar ao Menu Principal\n" +
-                            "Escolha uma opção: ");
+                Console.WriteLine("===============================================\n" +
+                                  "BEM-VINDO, ADMINISTRADOR\n" +
+                                  "===============================================\n" +
+                                  "[1] - Visualizar Lista de Usuários\n" +
+                                  "[2] - Visualizar Lista de Veículos Estacionados\n" +
+                                  "[3] - Modificar Valores do Estacionamento\n" +
+                                  "[4] - Voltar ao Menu Principal\n" +
+                                  "===============================================\n" +
+                                  "Escolha uma opção: ");
                 string opcao = Console.ReadLine();
 
                 switch (opcao)
@@ -125,14 +131,17 @@ namespace DesafioFundamentos.UI
         private void ModificarValoresEstacionamento()
         {
             Console.Clear();
-            Console.WriteLine("Modificar Valores do Estacionamento\n" +
-                        "1 - Modificar Preço Inicial\n" +
-                        "2 - Modificar Preço por Hora\n" +
-                        "3 - Modificar Preço Assinatura Mensal\n" +
-                        "4 - Modificar Limite de Horas Sem Cobrança\n" +
-                        "5 - Modificar Limite de Horas Cobrança Meia\n" +
-                        "6 - Voltar ao Menu Administrador\n" +
-                        "Escolha uma opção: ");
+            Console.WriteLine("===============================================\n" +
+                              "MODIFICAR VALORES DO ESTACIONAMENTO\n" +
+                              "===============================================\n" +
+                              "[1] - Modificar Preço Inicial\n" +
+                              "[2] - Modificar Preço por Hora\n" +
+                              "[3] - Modificar Preço Assinatura Mensal\n" +
+                              "[4] - Modificar Limite de Horas Sem Cobrança\n" +
+                              "[5] - Modificar Limite de Horas Cobrança Meia\n" +
+                              "[6] - Voltar ao Menu Administrador\n" +
+                              "===============================================\n" +
+                              "Escolha uma opção: ");
             string opcao = Console.ReadLine();
 
             switch (opcao)

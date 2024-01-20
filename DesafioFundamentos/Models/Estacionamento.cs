@@ -47,8 +47,10 @@ namespace DesafioFundamentos.Models
         public void EntrarNoEstacionamento()
         {
             Console.Clear();
-            Console.WriteLine("Entrar no Estacionamento\n" +
-                        "Digite seu CPF: ");
+            Console.WriteLine("===============================================\n" +
+                              "ENTRAR NO ESTACIONAMENTO\n" +
+                              "===============================================\n" +
+                              "Digite seu CPF: ");
             string cpf = Console.ReadLine();
 
             Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
@@ -82,9 +84,10 @@ namespace DesafioFundamentos.Models
         public void SairDoEstacionamento()
         {
             Console.Clear();
-            Console.WriteLine("Sair do Estacionamento");
-
-            Console.Write("Digite seu CPF: ");
+            Console.WriteLine("===============================================\n" +
+                              "SAIR DO ESTACIONAMENTO\n" +
+                              "===============================================\n" +
+                              "Digite seu CPF: ");
             string cpf = Console.ReadLine();
 
             Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
@@ -140,9 +143,10 @@ namespace DesafioFundamentos.Models
         public void ListarVeiculosUsuario()
         {
             Console.Clear();
-            Console.WriteLine("Lista de veículos");
-
-            Console.Write("Digite seu CPF: ");
+            Console.WriteLine("===============================================\n" +
+                              "LISTA DE VEÍCULOS\n" +
+                              "===============================================\n" +
+                              "Digite seu CPF: ");
             string cpf = Console.ReadLine();
             Usuario usuario = usuarios.FirstOrDefault(u => u.CPF == cpf);
 
@@ -168,7 +172,9 @@ namespace DesafioFundamentos.Models
 
         public void ListarVeiculosEstacionados()
         {
-            Console.WriteLine("Veículos estacionados:");
+            Console.WriteLine("===============================================\n" +
+                              "VEÍCULOS ESTACIONADOS\n" +
+                              "===============================================\n");
             
             foreach (Usuario usuario in usuarios)
             {
@@ -186,7 +192,9 @@ namespace DesafioFundamentos.Models
 
         public void ListarUsuarios()
         {
-            Console.WriteLine("Usuários Cadastrados:");
+            Console.WriteLine("===============================================\n" +
+                              "USUÁRIOS CADASTRADOS\n" +
+                              "===============================================\n");
             
             foreach (Usuario usuario in usuarios)
             {
@@ -232,8 +240,10 @@ namespace DesafioFundamentos.Models
         public void CadastrarUsuario()
         {
             Console.Clear();
-            Console.WriteLine("Cadastro de Usuário:/n" +
-                        "Informe seu nome:");
+            Console.WriteLine("===============================================\n" +
+                              "CADASTRO DE USUÁRIO\n" +
+                              "===============================================\n" +
+                              "Informe seu nome:");
             string nome = Console.ReadLine();
 
             Console.WriteLine("Informe seu telefone:");
